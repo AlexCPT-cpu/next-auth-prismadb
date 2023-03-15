@@ -1,60 +1,38 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
-import Post, { PostProps } from "../components/Post"
+import React, { useCallback } from "react";
+import { NextPageContext } from "next";
+import { getSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = [
-    {
-      id: "1",
-      title: "Prisma is the perfect ORM for Next.js",
-      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-      published: false,
-      author: {
-        name: "Nikolas Burk",
-        email: "burk@prisma.io",
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
       },
-    },
-  ]
-  return { 
-    props: { feed }, 
-    revalidate: 10 
+    };
   }
+
+  return {
+    props: {},
+  };
 }
 
-type Props = {
-  feed: PostProps[]
-}
+const Home = () => {
+  const router = useRouter();
 
-const Blog: React.FC<Props> = (props) => {
   return (
-    <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
+    <div className="flex min-h-screen items-center justify-between">
+      <div>AUTH</div>
+      <div>
+        <button className="" onClick={() => signOut()}>
+          Log Out
+        </button>
       </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
+    </div>
+  );
+};
 
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
-    </Layout>
-  )
-}
-
-export default Blog
+export default Home;
