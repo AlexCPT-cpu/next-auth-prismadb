@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub, FaFacebook, FaTwitch, FaInstagram, FaDiscord } from 'react-icons/fa';
 import Input from '../components/Input';
 import Image from 'next/image';
+import Nav from '../components/Nav';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -71,7 +72,7 @@ const Auth = () => {
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-black bg-center bg-fixed bg-cover">
       <div className="bg-black min-h-screen w-full h-full lg:bg-opacity-50">
         <nav className="px-12 py-5">
-          <Image width={50} height={50} src="/images/logo.png" className="h-12" alt="Logo" />
+          <Nav signed={false} text='Sign In Below' onClick={() => {console.log(',eh')}} />
         </nav>
         <div className="flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
@@ -103,10 +104,10 @@ const Auth = () => {
                 onChange={(e: any) => setPassword(e.target.value)} 
               />
             </div>
-            <button onClick={variant === 'login' ? login : register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+            <button onClick={variant === 'login' ? login : register} className="bg-green-600 py-3 text-white rounded-md w-full mt-10 hover:bg-green-700 transition">
               {variant === 'login' ? 'Login' : 'Sign up'}
             </button>
-            <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+            <div className="flex flex-row items-center gap-2 lg:gap-4 mt-8 justify-center">
               <div onClick={() => signIn('google', { callbackUrl: '/' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
                 <FcGoogle size={32} />
               </div>
