@@ -21,9 +21,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         emailVerified: new Date(),
         totalXp: 0,
         //@ts-ignore console
-        createdTasks: [],
+        createdTaskIds: [],
         //@ts-ignore console
-        tasks: []
+        taskIds: [],
+        completedIds: []
       }
     });
 

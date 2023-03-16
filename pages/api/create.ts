@@ -28,7 +28,7 @@ export default async function handler(
       },
     });
 
-    const tasks = user.createdTasks;
+    const tasks = user.createdTaskIds;
 
     const task = await prisma.task.create({
       data: {
@@ -48,7 +48,7 @@ export default async function handler(
       },
       data: {
         //@ts-ignore console
-        createdTasks: [...tasks, task.id],
+        createdTaskIds: [...tasks, task.id],
       },
     });
 

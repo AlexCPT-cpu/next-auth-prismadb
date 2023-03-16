@@ -13,7 +13,7 @@ export default async function handler(
   }
 
   try {
-    const { title, description, experience, type } = req.body;
+    const { title, description, experience, type, postUrl } = req.body;
     const { currentUser } = await serverAuth(req);
 
     const session = await getSession({ req });
@@ -28,7 +28,7 @@ export default async function handler(
       },
     });
 
-    const tasks = user.createdTasks;
+    const tasks = user.createdTaskIds;
 
     const task = await prisma.task.create({
       data: {
@@ -38,6 +38,7 @@ export default async function handler(
         experience,
         //@ts-ignore console
         creator: user,
+        postUrl
       },
     });
 
@@ -47,7 +48,7 @@ export default async function handler(
       },
       data: {
         //@ts-ignore console
-        createdTasks: [...tasks, task.id],
+        createdTaskIds: [...tasks, task.id],
       },
     });
 
