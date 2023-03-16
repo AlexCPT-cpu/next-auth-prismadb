@@ -5,6 +5,7 @@ import InstagramProvider from "next-auth/providers/instagram";
 import TwitterProvider from "next-auth/providers/twitter";
 import TwitchProvider from "next-auth/providers/twitch";
 import FacebookProvider from "next-auth/providers/facebook";
+import DiscordProvider from "next-auth/providers/discord";
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
@@ -36,6 +37,10 @@ export default NextAuth({
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID || '',
       clientSecret: process.env.TWITTER_CLIENT_SECRET || ''
+    }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || '',
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || ''
     }),
     Credentials({
       id: 'credentials',

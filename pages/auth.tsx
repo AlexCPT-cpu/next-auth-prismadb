@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FcGoogle } from 'react-icons/fc';
-import { FaGithub, FaFacebook, FaTwitch, FaInstagram } from 'react-icons/fa';
+import { FaGithub, FaFacebook, FaTwitch, FaInstagram, FaDiscord } from 'react-icons/fa';
 import Input from '../components/Input';
 import Image from 'next/image';
 
@@ -121,6 +121,9 @@ const Auth = () => {
               </div>
               <div onClick={() => signIn('instagram', { callbackUrl: '/' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
                 <FaInstagram size={32} />
+              </div>
+              <div onClick={() => signIn('discord', { callbackUrl: '/' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+                <FaDiscord size={32} />
               </div>
             </div>
             <p className="text-neutral-500 mt-12">
