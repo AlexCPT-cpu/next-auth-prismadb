@@ -43,7 +43,7 @@ export default function Modal() {
   const createTask = useCallback(async () => {
     let response;
 
-    response = await axios.post("/api/execute", {
+    response = await axios.post("/api/create", {
       title,
       description,
       experience,
