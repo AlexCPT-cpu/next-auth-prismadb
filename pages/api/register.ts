@@ -19,7 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         hashedPassword,
         image: '',
         emailVerified: new Date(),
-        totalXp: 0
+        totalXp: 0,
+        //@ts-ignore console
+        createdTasks: [],
+        //@ts-ignore console
+        tasks: []
       }
     });
 
