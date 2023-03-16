@@ -23,13 +23,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           email: session.user.email,
         },
       })
-
+      
     const task = await prisma.task.create({
       data: {
         title,
         description,
         type,
         experience,
+        //@ts-ignore console
         creator: user,
       }
     });
