@@ -13,7 +13,7 @@ export default async function handler(
   }
 
   try {
-    const { title, description, experience, type, postUrl } = req.body;
+    const { title, description, experience, type } = req.body;
     const { currentUser } = await serverAuth(req);
 
     const session = await getSession({ req });
@@ -38,7 +38,6 @@ export default async function handler(
         experience,
         //@ts-ignore console
         creator: user,
-        postUrl
       },
     });
 

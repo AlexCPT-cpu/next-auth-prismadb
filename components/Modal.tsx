@@ -2,21 +2,29 @@ import { Dialog, Transition, Listbox } from "@headlessui/react";
 import { Fragment, useCallback, useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 import Input from "./Input";
+import useTask from "../hooks/useTasks";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 const people = [
   { name: "Create Like a Post Task" },
-  { name: "Create Comment on a Post Task" },
-  { name: "Create Follow an Account Task" },
+  /*{ name: "Create Comment on a Post Task" },
+  { name: "Create Follow an Account Task" },*/
 ];
 
 export default function Modal() {
   const [isOpen, setIsOpen] = useState(false);
   const [nextPage, setNextPage] = useState(false);
   const [selected, setSelected] = useState(people[0]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [xpPoints, setxpPoints] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [experience, setExperience] = useState("");
+  const [type, setType] = useState("Instagram Follow Task");
+  const [postUrl, setPostUrl] = useState("");
+
+  const { data: currentUser, mutate } = useCurrentUser();
+  const { data: tasks = [] } = useTask();
 
   const toogleModal = useCallback(() => {
     setIsOpen(!isOpen);
@@ -31,6 +39,27 @@ export default function Modal() {
     setIsOpen(false);
     setNextPage(false);
   };
+
+  const createTask = useCallback(async () => {
+    let response;
+
+    response = await axios.post("/api/execute", {
+      title,
+      description,
+      experience,
+      type,
+      postUrl,
+    });
+
+    const updated = response?.data;
+
+    mutate({
+      ...updated.updatedUser,
+      tasks: tasks,
+    });
+    mutate();
+    onSubmit();
+  }, [mutate, experience, title, description, type, tasks, postUrl]);
 
   return (
     <>
@@ -203,7 +232,7 @@ export default function Modal() {
                       label="Title"
                       value={title}
                       onChange={(e: any) => {
-                        setTitle(e.currentTarget.value)
+                        setTitle(e.currentTarget.value);
                       }}
                     />
                     <Input
@@ -212,7 +241,7 @@ export default function Modal() {
                       label="Description"
                       value={description}
                       onChange={(e: any) => {
-                        setDescription(e.currentTarget.value)
+                        setDescription(e.currentTarget.value);
                       }}
                     />
 
@@ -220,9 +249,19 @@ export default function Modal() {
                       type="number"
                       id="xp"
                       label="Xp Points"
-                      value={xpPoints}
+                      value={experience}
                       onChange={(e: any) => {
-                        setxpPoints(e.currentTarget.value)
+                        setExperience(e.currentTarget.value);
+                      }}
+                    />
+
+                    <Input
+                      type="text"
+                      id="post"
+                      label="Url"
+                      value={postUrl}
+                      onChange={(e: any) => {
+                        setPostUrl(e.currentTarget.value);
                       }}
                     />
                   </div>
@@ -231,7 +270,7 @@ export default function Modal() {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={onSubmit}
+                      onClick={createTask}
                     >
                       Submit
                     </button>
