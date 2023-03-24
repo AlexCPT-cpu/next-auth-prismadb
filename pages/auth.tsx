@@ -77,7 +77,7 @@ const Auth = () => {
   }, [email, name, password, login]);
 
   return (
-    <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-black bg-center bg-fixed bg-cover">
+    <div className="relative h-full w-full bg-[url('/metabay-bg.jpg')] bg-no-repeat bg-black bg-center bg-fixed bg-cover">
       <div className="bg-black min-h-screen w-full h-full lg:bg-opacity-50">
         <nav className="px-12 py-5">
           <Nav

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { NextPageContext } from "next";
 import { getSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
